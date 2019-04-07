@@ -13,22 +13,20 @@ public class Employee {
     int id;
     String name;
     String email;
-    String password;
+    String position;
     String country;
     int salary;
     // contructor
-    public Employee(String name,String email,String password,String country,int salary){
-        this.name = name;
-        this.email = email;
-        this.country = country;
-        this.salary = salary;
-    }
+    
     // getters
     public int getId(){
         return this.id;
     }
-    public String getPassword(){
-        return this.password;
+    public String getName(){
+        return this.name;
+    }
+    public String getPosition(){
+        return this.position;
     }
     public String getEmail(){
         return this.email;
@@ -41,8 +39,8 @@ public class Employee {
     }
     
     // setters
-    public void setPassword(String password){
-        this.password = password;
+    public void setPosition(String position){
+        this.position = position;
     }
     public void setCountry(String country){
         this.country = country;
@@ -55,5 +53,8 @@ public class Employee {
     }
     public void setId(int id){
         this.id = id;
+    }
+    public void setSalary(int salary){
+        this.salary = salary;
     }
 }
