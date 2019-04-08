@@ -7,8 +7,7 @@ package main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Davie
  */
-public class Welcome extends HttpServlet {
+public class UpdateEmployee extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,40 +31,28 @@ public class Welcome extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        EmpDB db = new EmpDB();
-        List<Employee> list = new ArrayList<Employee>();
-        list = EmpDB.getEmployees();
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Emp list</title>");
-            out.println("<meta charset='UTF-8'>");
-            out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-            out.println("<link rel='stylesheet' type='text/css' href='css/bootstrap.css'>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<nav class='navbar navbar-default'><div class='container-fluid'><div class='navbar-header'><a class='navbar-brand' href='#'>EmployeeRecords</a></div><ul class='nav navbar-nav'><li class='active'><a href='Welcome'>Home</a></li><li><a href='new'>New</a></li><li><a href='#'>Edit</a></ul></div></nav>");
-            out.println("<div class='container'><div class='row'><div class='col-lg-12'>");
-            out.println("<hr><h4>Our employees</h4>");
-            out.println("<table class='table'>");
-            out.println("<tr><th>id</th><th>Name</th><th>email</th><th>position</th><th>Salary</th><th>Country</th><th></td></tr>");
-            for(Employee e : list){
-                out.println("<tr>");
-                    out.println("<td>"+e.getId()+"</td>");
-                    out.println("<td>"+e.getName()+"</td>");
-                    out.println("<td>"+e.getEmail()+"</td>");
-                    out.println("<td>"+e.getPosition()+"</td>");
-                    out.println("<td>"+e.getSalary()+"</td>");
-                    out.println("<td>"+e.getCountry()+"</td>");
-                    out.println("<td><a href='edit?id="+e.getId()+"'>edit</a> | <a href='delete?id="+e.getId()+"'>delete</a></td>");
-                out.println("</tr>");
-            }
-            out.println("</div></div></div>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter rs = response.getWriter();
+
+        Employee e = new Employee();
+        e.setId(Integer.parseInt(request.getParameter("id")));
+        e.setName(request.getParameter("name"));
+        e.setCountry(request.getParameter("country"));
+        e.setEmail(request.getParameter("email"));
+        e.setSalary(Integer.parseInt(request.getParameter("salary")));
+        e.setPosition(request.getParameter("position"));
+        
+        if(EmpDB.update(e) == 1){
+            rs.println("<script>alert('update was successful')</script>");
+            RequestDispatcher ds = request.getRequestDispatcher("Welcome");
+            ds.include(request, response);
         }
+        else{
+            rs.println("<script>alert('update failed try again later')</script>");
+            RequestDispatcher ds = request.getRequestDispatcher("newemp.html");
+            ds.include(request, response);
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -8,6 +8,22 @@
         <servlet-name>Welcome</servlet-name>
         <servlet-class>main.Welcome</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateEmployee</servlet-name>
+        <servlet-class>main.CreateEmployee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditEmployee</servlet-name>
+        <servlet-class>main.EditEmployee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateEmployee</servlet-name>
+        <servlet-class>main.UpdateEmployee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Delete</servlet-name>
+        <servlet-class>main.Delete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Tester</servlet-name>
         <url-pattern>/Tester</url-pattern>
@@ -15,6 +31,22 @@
     <servlet-mapping>
         <servlet-name>Welcome</servlet-name>
         <url-pattern>/Welcome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateEmployee</servlet-name>
+        <url-pattern>/new</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditEmployee</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEmployee</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

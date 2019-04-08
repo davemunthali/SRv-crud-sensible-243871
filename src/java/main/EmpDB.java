@@ -45,11 +45,90 @@ public class EmpDB {
                 e.setSalary(rs.getInt("salary"));
                 list.add(e);
             }
+            con.close();
         }
         catch(Exception e){
             e.printStackTrace();
         }
         return list;
     }
+    public static int save(Employee e){
+        int status = 0;
+        try{
+            Connection con = getConnection();
+            PreparedStatement sts = con.prepareStatement("INSERT INTO emp (name,email,country,position,salary) VALUES(?,?,?,?,?)");
+            sts.setString(1,e.getName());
+            sts.setString(2,e.getEmail());
+            sts.setString(3,e.getCountry());
+            sts.setString(4,e.getPosition());
+            sts.setInt(5,e.getSalary());
+            status = sts.executeUpdate();
+            con.close();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+            
+        return status;
+    }
+    public static Employee getEmployee(int id){
+        Employee e = new Employee();
+        try{
+            Connection con = getConnection();
+            PreparedStatement st = con.prepareStatement("SELECT * FROM emp WHERE id=?");
+            st.setInt(1, id);            
+            ResultSet re = st.executeQuery();
+            if(re.next()){
+                e.setName(re.getString("name"));
+                e.setEmail(re.getString("email"));
+                e.setId(re.getShort("id"));
+                e.setCountry(re.getString("country"));
+                e.setPosition(re.getString("position"));
+                e.setSalary(re.getInt("salary"));
+            }
+            
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return e;
+    }
+    public static int update(Employee e){
+        int status = 0;
+        try{
+            Connection con = getConnection();
+            PreparedStatement ps = con.prepareStatement("UPDATE emp SET name=?,email=?,position=?,salary=?,country=? WHERE id=?");
+            ps.setString(1,e.getName());
+            ps.setString(2,e.getEmail());
+            ps.setString(3,e.getPosition());
+            ps.setInt(4,e.getSalary());
+            ps.setString(5,e.getCountry());
+            ps.setInt(6,e.getId());
+            
+            status = ps.executeUpdate();
+            con.close();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return status;
+    }
+    public static int delete(int id){
+        int status = 0;
+        
+        try{
+          Connection con = getConnection();
+          PreparedStatement st = con.prepareStatement("DELETE FROM emp WHERE id=?");
+          st.setInt(1,id);
+          
+          status = st.executeUpdate();
+          con.close();
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return status;
+    }
+    
     
 }
